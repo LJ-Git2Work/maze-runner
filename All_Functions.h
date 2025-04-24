@@ -1,6 +1,5 @@
 /*
 *	All functions that are reusable and useful here please
-*
 */
 #ifndef ALAS
 #define ALAS

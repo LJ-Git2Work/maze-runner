@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "stdio.h": "c",
+        "maze_runner.h": "c",
+        "all_functions.h": "c",
+        "string.h": "c",
+        "common.h": "c"
+    }
+}

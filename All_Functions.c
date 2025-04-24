@@ -1,6 +1,5 @@
 /*
 *	All functions that are reusable and useful here please
-*
 */
 
 #include <stdio.h>
@@ -29,6 +28,7 @@ int get_int_in_range(char *prompt, int Lower_bound, int Upper_bound){
 		}else
 			valid = 1;
 	}
+	clear_input_buffer();
 	return input;
 }
 
