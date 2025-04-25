@@ -53,11 +53,11 @@ void make_block_maze_file(block (*block_maze)[MAZE_SIZE]){
 
 block block_type(char thing){
 	switch (thing){
-		case '*':
+		case ' ':
 			return path;
-		case '$':
+		case 'E':
 			return m_exit;
-		case '>':
+		case 'S':
 			return start;
 		default:
 			return wall;
@@ -68,6 +68,13 @@ block block_type(char thing){
 
 int menu(){
 	int choice;
+
+	printf(
+" __  __                 ____                              _ _ _ \n"
+"|  \\/  | __ _ _______  |  _ \\ _   _ _ __  _ __   ___ _ __| | | |\n"
+"| |\\/| |/ _` |_  / _ \\ | |_) | | | | '_ \\| '_ \\ / _ \\ '__| | | |\n"
+"| |  | | (_| |/ /  __/ |  _ <| |_| | | | | | | |  __/ |  |_|_|_|\n"
+"|_|  |_|\\__,_/___\\___| |_| \\_\\\\__,_|_| |_|_| |_|\\___|_|  (_|_|_)\n");
 	char *prompt = "Take Control [1] or Auto Run? [0]\n>> ";
 	choice = get_int_in_range(prompt, 0, 1);
 	return choice; 
@@ -125,7 +132,7 @@ void move_direction(direction facing, int *x_pos, int *y_pos){
 
 /********************	GRAPHICS	********************/
 
-
+/*
 void display_graphics(block front, block left, block right){
 	char *tag;
 	tag = (char*) malloc (20 * sizeof(char));
@@ -183,12 +190,69 @@ void display_art(char *tag) {
 
     fclose(artfile);
 }
+*/
 
+void display_view(block (*block_maze)[MAZE_SIZE], direction facing, int y_pos, int x_pos){
+	char grid[GRID_SIZE][GRID_SIZE];
+	int grid_start_relative = 0 - GRID_SIZE / 2; 		//If gridsize is 5, div 2 is 2, grid left corner = 0 - 2, which is -2. THis is where the display grid starts relative to the user, grid must be odd num 
+	//printf("gridstartrelative = %d\n", grid_start_relative);
+	//printf("xpos = %d, ypos = %d\n", x_pos, y_pos);
+	for(int i = 0, ii = grid_start_relative; i < GRID_SIZE; i++, ii++){
+		for(int j = 0, jj = grid_start_relative; j < GRID_SIZE; j++, jj++){
+			int map_y = y_pos + ii;
+			int map_x = x_pos + jj;
+			if(map_x >= MAZE_SIZE || map_x < 0 || map_y >= MAZE_SIZE || map_y < 0){
+				grid[i][j] = 'X';
+				//printf("jj = %d, ii = %d\n", jj, ii);
+			}else if(ii == 0 && jj == 0){
+				grid[i][j] =  get_user_facing_graphic(facing);
+			}else{
+				grid[i][j] = get_block_graphic(block_maze[map_y][map_x]);
+			}
+		}
+	}
 
+	for(int i = 0; i < GRID_SIZE; i++){
+		for(int j = 0; j < GRID_SIZE; j++){
+			if(i == 0 || j == 0 || i == GRID_SIZE - 1 || j == GRID_SIZE - 1 ){
+				if(grid[i][j] == 'X'){
+					printf("%c ", grid[i][j]);
+				}else{
+					printf(". ");
+				}
+			}else{
+				printf("%c ", grid[i][j]);
+			}
+		}
+		printf("\n");
+	}
+}
 
+char get_block_graphic(block item){
+	switch(item){
+		case wall:
+			return '#';
+		case path:
+			return ' ';
+		case start:
+			return 'S';
+		case m_exit:
+			return '$';
+	}
+}
 
-
-
+char get_user_facing_graphic(direction facing){
+	switch(facing){
+		case North:
+			return '^';
+		case South:
+			return 'v';
+		case East:
+			return '>';
+		case West:
+			return '<';
+	}
+}
 
 
 

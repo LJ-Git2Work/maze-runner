@@ -18,9 +18,10 @@ int main(){
 	make_2d_block_array_of_2d_char_array(char_maze, block_maze);  	//Copies the char of that 2d array to type block in another 2d array
 	make_block_maze_file(block_maze);
 	
-	if(menu())
+	if(menu()){
+		system("cls");
 		player_runner(block_maze);
-	else
+	}else
 		//auto_runner();
 	return 0;
 }

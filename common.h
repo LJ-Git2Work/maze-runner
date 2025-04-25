@@ -1,6 +1,7 @@
 #ifndef COMMON_H
 #define COMMON_H
 #define MAZE_SIZE 25
+#define GRID_SIZE 9
 
 typedef enum
 	{wall, path, start, m_exit}

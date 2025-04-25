@@ -28,7 +28,7 @@ int get_int_in_range(char *prompt, int Lower_bound, int Upper_bound){
 		}else
 			valid = 1;
 	}
-	clear_input_buffer();
+	//clear_input_buffer();
 	return input;
 }
 
@@ -142,3 +142,9 @@ void elements_less_than_x(const float *farr, int SIZE, float x, int *elements_ar
 		}
 	}
 }
+
+
+//			  GRAPHICS			//
+/*******************************/
+
+

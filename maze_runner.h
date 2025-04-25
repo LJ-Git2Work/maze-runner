@@ -18,4 +18,7 @@ void display_graphics(block front, block left, block right);
 void display_art(char *tag);
 void player_runner(block (*block_maze)[MAZE_SIZE]);
 void get_start_coord(block (*block_maze)[MAZE_SIZE], int *y, int *x);
+void display_view(block (*block_maze)[MAZE_SIZE], direction facing, int y_pos, int x_pos);
+char get_block_graphic(block item);
+char get_user_facing_graphic(direction facing);
 #endif

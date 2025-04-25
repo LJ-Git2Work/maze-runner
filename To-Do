@@ -1,17 +1,13 @@
 To-Do list for this project
 
 Make player controller function
-- track a position x and x
-- player can see left right and forward
-- keep track of the blocks in these positions relative to the player
-- player can turn
-- player can move only forward, so keeep track of direction they face N,E,S,W
-- player can not move forward if forward is wall
-- players initial position is eqaul to the start block
-- player win condition is standing on m_exit block 
+[X] track a position x and x
+[X] player can see left right and forward
+[X] keep track of the blocks in these positions relative to the player
+[X] player can turn
+[X] player can move only forward, so keeep track of direction they face N,E,S,W
+[X] player can not move forward if forward is wall
+[X] players initial position is eqaul to the start block
+[X] player win condition is standing on m_exit block 
 
 
-TEXT GUI elements
-- front wall, left wall, right wall
-- front left corner wall, front right corner wall
-- front path, left path, right path
