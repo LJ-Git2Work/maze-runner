@@ -1,0 +1,11 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+#include "maze_macros.h"
+#include "maze_structs.h"
+#include "ALL_FUNCS.h"
+#include "IO.h"
+#include "maze_build.h"
+#include "game_logic.h"
+#include "game_runner.h"
