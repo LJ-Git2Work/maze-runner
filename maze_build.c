@@ -16,24 +16,24 @@ void create_maze_from_file(const char *filename, Grid *maze){
 	
 	mazeFile = fopen(filename, "r");
 	if(mazeFile == NULL){
-		TRACE("Maze FILE pointer is NULL");
+		//TRACE("Maze FILE pointer is NULL");
 		exit(1);
 	}
 
 	rows = count_file_lines(mazeFile);
-	VARTRACE(rows, "%d");
+	//VARTRACE(rows, "%d");
 	cols = longest_line_size(mazeFile);
-	VARTRACE(cols, "%d");
+	//VARTRACE(cols, "%d");
 	
 	grid_init(maze, rows, cols, sizeof(BlockType));
 	if(maze->data == NULL){
-		TRACE("Maze data pointer is NULL");
+		//TRACE("Maze data pointer is NULL");
 		exit(1);
 	}
 	
 	fseek(mazeFile, 0, SEEK_SET);
 	
-	TRACE("Start make maze");
+	//TRACE("Start make maze");
 	for(int row = 0; row < maze->rows; row++)
 	{
 		for(int col = 0; col <= maze->cols; col++)
@@ -52,7 +52,7 @@ void create_maze_from_file(const char *filename, Grid *maze){
 		}
 	}
 	fclose(mazeFile);
-	TRACE("Maze Created");
+	//TRACE("Maze Created");
 }
 
 BlockType get_block_type(char c){

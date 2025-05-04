@@ -16,8 +16,7 @@ void grid_init(Grid* g, int rows, int cols, size_t elem_size){
     g->cols = cols;
     g->elem_size = elem_size;
     g->data = malloc(rows * cols * elem_size);
-	if(g->data == NULL)
-		TRACE("Grid memory allocation fail");
+	if(g->data == NULL);
 }
 
 void clear_input_buffer(){char c; while((c = getchar()) != '\n' && c != EOF);}
@@ -255,21 +254,18 @@ int open_file(const char *file_name){
 }
 
 int count_file_lines(FILE *fptr){
-    int lines = 0;
+    int lines = 1;
     int c;
-    int prev = '\n';
 
     fseek(fptr, 0, SEEK_SET);
+	if((c = fgetc(fptr)) == EOF){
+		return 0;
+	}
 
     while((c = fgetc(fptr)) != EOF){
         if (c == '\n') {
             lines++;
         }
-        prev = c;
-    }
-
-    if(prev != '\n' && prev != EOF){
-        lines++;
     }
     return lines;
 }

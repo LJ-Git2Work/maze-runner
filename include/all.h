@@ -8,4 +8,4 @@
 #include "IO.h"
 #include "maze_build.h"
 #include "game_logic.h"
-#include "game_runner.h"
+#include "game_loop.h"

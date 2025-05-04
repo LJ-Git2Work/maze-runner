@@ -14,7 +14,7 @@ void get_start_coord(const Grid* maze, int* y, int* x){
 		for(int col = 0; col < maze->cols; col++)
 		{
 			if(GRID_GET(BlockType, maze->data, row, col, maze->cols) == START){
-				TRACE("Start position found");
+				//TRACE("Start position found");
 				*y = row;
 				*x = col;
 				return;
@@ -33,7 +33,7 @@ int parse_action_and_dir(const char* input, ActionType* type, RelativeDir* rel_d
 	
 	if(string_ptr == NULL){
 		*type = INVALID_ACTION;
-		TRACE("USER INPUT = INVALID ACTION");
+		//TRACE("USER INPUT = INVALID ACTION");
 	}
 	else{
 		*type = parse_ActionType(string_ptr);
@@ -43,7 +43,7 @@ int parse_action_and_dir(const char* input, ActionType* type, RelativeDir* rel_d
 	
 	if(string_ptr == NULL){
 		*rel_dir = FRONT;
-		TRACE("USER MOVE DIR POINTER = NULL");
+		//TRACE("USER MOVE DIR POINTER = NULL");
 	}
 	else{
 		*rel_dir = parse_RelativeDir(string_ptr);
@@ -94,7 +94,6 @@ CardinalDir get_absolute_direction(CardinalDir facing, RelativeDir rel_dir) {
 */
 
 void update_player_blocks(Grid* maze, Player* user){
-	TRACE("Start");
 	const int dy[] = { -1, 0, 1, 0 };  
 	const int dx[] = { 0, 1, 0, -1 };
 	
@@ -108,5 +107,4 @@ void update_player_blocks(Grid* maze, Player* user){
 		abs_d = ABS_DIR(abs_facing, rel_dir);
 		user->blocks[rel_dir] = GRID_GET(BlockType, maze->data, (y + dy[abs_d]), (x + dx[abs_d]), maze->cols);
 	}
-	TRACE("End");
 }

@@ -40,82 +40,102 @@ void display_input_error(const char* input){
 }
 
 /********************	GRAPHICS	********************/
-void display_maze(const Grid* maze, Player* user){
-	Grid map_view = {0};	
-	grid_init(&map_view, VIEW_SIZE, VIEW_SIZE, sizeof(char));
-	system("cls");
-	create_map_view(maze, user, &map_view);
-	display_map_view(&map_view);
-	free(map_view.data);
+void create_and_display_maze(const Grid* maze, const Player* user){
+	Grid map = {0};	
+	map.rows = maze->rows;
+	map.cols = maze->cols;
+
+	grid_init(&map, map.rows, map.cols, sizeof(char));
+	create_map(maze, &map);
+	
+	if(user->identity != HUMAN){
+		display_player_map(&map, user);
+	}else if(user->identity != BOT){
+		display_map_all(&map, user);
+	}
+	
+	free(map.data);
 }
 
-void create_map_view(const Grid* maze, const Player* user, Grid* map_view){
-	int offset = 0 - VIEW_SIZE / 2;	/* This is where the display grid starts relative to the user, grid must be odd num If grid_size is 5, div 2 is 2, grid left corner = 0 - 2, which is -2. view goes from -2 to +2 relative to the user*/
-	//TRACE("Create Map view start");
-	const char block_chars[] = {
+void create_map(const Grid* maze, Grid* map){
+	const char tile_chars[] = {
 		[WALL] = '#', 
 		[PATH] = ' ',
 		[START] = 'S',
 		[M_EXIT] = '$'
 	};
 
+	for(int row = 0; row < maze->rows; row++)
+	{
+		int col;
+		for(col = 0; col < maze->cols; col++)
+		{
+			BlockType tile = GRID_GET(BlockType, maze->data, row, col, maze->cols);
+			GRID_SET(char, map->data, row, col, map->cols, tile_chars[tile]);
+		}
+	}
+}
+
+void display_player_map(Grid* map, const Player* user){
+	int offset = 0 - VIEW_SIZE / 2;	/* This is where the display grid starts relative to the user, grid must be odd num If grid_size is 5, div 2 is 2, grid left corner = 0 - 2, which is -2. view goes from -2 to +2 relative to the user*/
 	const char user_graphic[] = {
 		[NORTH] = '^',
 		[EAST] = '>',
 		[SOUTH] = 'v',
 		[WEST] = '<'
 	};
-
-	for(int y = 0, dy = offset; y < VIEW_SIZE; y++, dy++)
+	
+	for(int row = 0, dy = offset; row < VIEW_SIZE; row++, dy++)
 	{
-		for(int x = 0, dx = offset; x < VIEW_SIZE; x++, dx++)
+		for(int col = 0, dx = offset; col < VIEW_SIZE; col++, dx++)
 		{
-			int maze_y = user->y_pos + dy;
-			int maze_x = user->x_pos + dx;
+			int tile_row = user->y_pos + dy;
+			int tile_col = user->x_pos + dx;
 			
-			if(maze_x > maze->cols || maze_x < 0 || maze_y > maze->rows || maze_y < 0)
+			if(tile_col > map->cols || tile_col < 0 || tile_row > map->rows || tile_row < 0)
 			{
-				GRID_SET(char, map_view->data, y, x, map_view->cols, 'X');
-			}
-			else if(dy == 0 && dx == 0)
-			{
-				GRID_SET(char, map_view->data, y, x, map_view->cols, user_graphic[user->facing]);
-			}
-			else
-			{
-				BlockType square = GRID_GET(BlockType, maze->data, maze_y, maze_x, maze->cols);
-				GRID_SET(char, map_view->data, y, x, map_view->cols, block_chars[square]);
-			}
-		}
-	}
-	//TRACE("Create Map view end");
-}
-
-
-void display_map_view(Grid* map_view){
-	//TRACE("Display map view start");
-	char c;
-	for(int row = 0; row < map_view->rows; row++)
-	{
-		for(int col = 0; col < map_view->cols; col++)
-		{
-			if(GRID_GET(char, map_view->data, row, col, map_view->cols) == 'X')
-			{
-				printf("  ");
+				printf("X ");
 			}
 			else if(row == 0 || col == 0 || row == VIEW_SIZE - 1 || col == VIEW_SIZE - 1)
 			{
 				printf("~ ");
 			}
+			else if(dy == 0 && dx == 0)
+			{
+				printf("%c ", user_graphic[user->facing]);
+			}
 			else
 			{
-				c = GRID_GET(char, map_view->data, row, col, map_view->cols);
-				printf("%c ", c);
+				printf("%c ", GRID_GET(char, map->data, tile_row, tile_col, map->cols));
 			}
 		}
 		printf("\n");
 	}
-	//TRACE("Display map view end");
+}
+
+
+void display_map_all(Grid* map, const Player* user){
+	const char user_graphic[] = {
+		[NORTH] = '^',
+		[EAST] = '>',
+		[SOUTH] = 'v',
+		[WEST] = '<'
+	};
+	
+	for(int row = 0; row < map->rows; row++)
+	{
+		for(int col = 0; col < map->cols; col++)
+		{
+			if(row == user->y_pos && col == user->x_pos){
+				printf("%c ", user_graphic[user->facing]);
+			}
+			else
+			{
+				printf("%c ", GRID_GET(char, map->data, row, col, map->cols));
+			}
+		}
+		printf("\n");
+	}
 }
 /*
 char get_block_graphic(BlockType item){

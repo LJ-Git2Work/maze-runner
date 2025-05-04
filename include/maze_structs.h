@@ -41,12 +41,17 @@ typedef struct{
 	RelativeDir rel_dir;
 }Action;
 
+typedef enum{
+	BOT,
+	HUMAN
+}Identity;
 
 /* The player structure, their position in the maze structure, the cardinal direction they are facing */
 typedef struct{
     int x_pos, y_pos;
 	BlockType blocks[4];
     CardinalDir facing;
+	Identity identity;
 }Player;
 
 
