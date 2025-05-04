@@ -40,7 +40,7 @@ void display_input_error(const char* input){
 }
 
 /********************	GRAPHICS	********************/
-void create_and_display_maze(const Grid* maze, const Player* user){
+void create_and_display_maze(const Grid* maze, const Player* user, void (*map_display)(Grid*, const Player*)){
 	Grid map = {0};	
 	map.rows = maze->rows;
 	map.cols = maze->cols;
@@ -48,12 +48,14 @@ void create_and_display_maze(const Grid* maze, const Player* user){
 	grid_init(&map, map.rows, map.cols, sizeof(char));
 	create_map(maze, &map);
 	
+	map_display(&map, user);
+	/*
 	if(user->identity != HUMAN){
 		display_player_map(&map, user);
 	}else if(user->identity != BOT){
 		display_map_all(&map, user);
 	}
-	
+	*/
 	free(map.data);
 }
 

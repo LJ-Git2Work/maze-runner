@@ -16,9 +16,10 @@ void run_game(Grid* maze, Player* user){
 		char input[LINE_SIZE] = {0};
 		int	error_flag = 0;
 		do{
+			update_player_blocks(maze, user);
 			system("cls");
-			create_and_display_maze(maze, user);
-
+			create_and_display_maze(maze, user, display_player_map);
+			
 			if(error_flag == 1)
 			{
 				display_input_error(input);
@@ -37,14 +38,11 @@ void run_game(Grid* maze, Player* user){
 				{				
 					move_dir = ABS_DIR(user->facing, action.rel_dir);
 					move_player(move_dir, &user->y_pos, &user->x_pos);
-				}
-				update_player_blocks(maze, user);
+				}	
 			}
 		}while(GRID_GET(BlockType, maze->data, user->y_pos, user->x_pos, maze->cols) != M_EXIT);
 	}else if(user->identity == BOT){
-
 	}
-    user->identity = BOT;
-	create_and_display_maze(maze, user);
+	create_and_display_maze(maze, user, display_map_all);
 	free(maze->data);
 }

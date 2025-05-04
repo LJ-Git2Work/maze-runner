@@ -10,7 +10,7 @@ void get_user_input(char* input);
 void display_input_error(const char* input);
 
 /********************	GRAPHICS	********************/
-void create_and_display_maze(const Grid* maze, const Player* user);
+void create_and_display_maze(const Grid* maze, const Player* user, void (*map_display)(Grid*, const Player*));
 void create_map(const Grid* maze, Grid* map);
 void display_player_map(Grid* map, const Player* user);
 void display_map_all(Grid* map, const Player* user);
