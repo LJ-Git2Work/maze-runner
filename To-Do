@@ -11,3 +11,13 @@ Make player controller function
 [X] player win condition is standing on m_exit block 
 
 
+Make Documentation
+[ ] structure chart
+[ ] test cases table
+[ ] high level algorithm
+
+Code Edits/Changes/Adds
+[ ] add pointer null checks, for files ask for file names if failed
+[ ] edit exit program option
+[ ] add code comments
+
