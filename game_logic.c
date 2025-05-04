@@ -47,8 +47,8 @@ int parse_action_and_dir(const char* input, ActionType* type, RelativeDir* rel_d
 	}
 	else{
 		*rel_dir = parse_RelativeDir(string_ptr);
-		fprintf(stderr, "string {%s}\n", string_ptr);
-		fprintf(stderr, "%d direction \n", *rel_dir);
+		//fprintf(stderr, "string {%s}\n", string_ptr);
+		//fprintf(stderr, "%d direction \n", *rel_dir);
 	}
 
 	return(*type == INVALID_ACTION || *rel_dir == INVALID_DIR);
@@ -69,12 +69,18 @@ RelativeDir parse_RelativeDir(const char *string){
 }
 
 void move_player(const CardinalDir facing, int *y_pos, int *x_pos){
-    switch(facing){
-		case NORTH: 	*y_pos = *y_pos - 1; 	/* printf("Move North\n"); */	return;
-        case SOUTH:		*y_pos = *y_pos + 1;  	/* printf("Move South\n"); */	return;
-        case WEST:		*x_pos = *x_pos - 1; 	/* printf("Move West\n"); */ 	return;
-        case EAST:		*x_pos = *x_pos + 1; 	/* printf("Move East\n"); */	return;
-    }
+	const int dy[] = { -1, 0, 1, 0 };  
+	const int dx[] = { 0, 1, 0, -1 };
+
+	*y_pos = *y_pos + dy[facing];
+	*x_pos = *x_pos + dx[facing];
+
+	//switch(facing){
+		//case NORTH: 	*y_pos = *y_pos - 1; 	/* printf("Move North\n"); */	return;
+        //case SOUTH:		*y_pos = *y_pos + 1;  	/* printf("Move South\n"); */	return;
+        //case WEST:		*x_pos = *x_pos - 1; 	/* printf("Move West\n"); */ 	return;
+        //case EAST:		*x_pos = *x_pos + 1; 	/* printf("Move East\n"); */	return;
+    //}
 }
 
 int can_move_rel_dir(const BlockType *surrounding_blocks, RelativeDir rel_dir){

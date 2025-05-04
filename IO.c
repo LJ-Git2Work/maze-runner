@@ -40,11 +40,32 @@ void display_input_error(const char* input){
 }
 
 /********************	GRAPHICS	********************/
+void display_maze(const Grid* maze, Player* user){
+	Grid map_view = {0};	
+	grid_init(&map_view, VIEW_SIZE, VIEW_SIZE, sizeof(char));
+	system("cls");
+	create_map_view(maze, user, &map_view);
+	display_map_view(&map_view);
+	free(map_view.data);
+}
 
 void create_map_view(const Grid* maze, const Player* user, Grid* map_view){
 	int offset = 0 - VIEW_SIZE / 2;	/* This is where the display grid starts relative to the user, grid must be odd num If grid_size is 5, div 2 is 2, grid left corner = 0 - 2, which is -2. view goes from -2 to +2 relative to the user*/
-	TRACE("Create Map view start");
-	
+	//TRACE("Create Map view start");
+	const char block_chars[] = {
+		[WALL] = '#', 
+		[PATH] = ' ',
+		[START] = 'S',
+		[M_EXIT] = '$'
+	};
+
+	const char user_graphic[] = {
+		[NORTH] = '^',
+		[EAST] = '>',
+		[SOUTH] = 'v',
+		[WEST] = '<'
+	};
+
 	for(int y = 0, dy = offset; y < VIEW_SIZE; y++, dy++)
 	{
 		for(int x = 0, dx = offset; x < VIEW_SIZE; x++, dx++)
@@ -58,21 +79,21 @@ void create_map_view(const Grid* maze, const Player* user, Grid* map_view){
 			}
 			else if(dy == 0 && dx == 0)
 			{
-				GRID_SET(char, map_view->data, y, x, map_view->cols, get_user_graphic(user->facing));
+				GRID_SET(char, map_view->data, y, x, map_view->cols, user_graphic[user->facing]);
 			}
 			else
 			{
 				BlockType square = GRID_GET(BlockType, maze->data, maze_y, maze_x, maze->cols);
-				GRID_SET(char, map_view->data, y, x, map_view->cols, get_block_graphic(square));
+				GRID_SET(char, map_view->data, y, x, map_view->cols, block_chars[square]);
 			}
 		}
 	}
-	TRACE("Create Map view end");
+	//TRACE("Create Map view end");
 }
 
 
 void display_map_view(Grid* map_view){
-	TRACE("Display map view start");
+	//TRACE("Display map view start");
 	char c;
 	for(int row = 0; row < map_view->rows; row++)
 	{
@@ -94,9 +115,9 @@ void display_map_view(Grid* map_view){
 		}
 		printf("\n");
 	}
-	TRACE("Display map view end");
+	//TRACE("Display map view end");
 }
-
+/*
 char get_block_graphic(BlockType item){
 	switch(item){
 		case WALL: 		return '#';
@@ -108,6 +129,8 @@ char get_block_graphic(BlockType item){
 }
 
 char get_user_graphic(CardinalDir facing){
+	
+	
 	switch(facing){
 		case NORTH: return '^';
 		case SOUTH: return 'v';
@@ -117,7 +140,7 @@ char get_user_graphic(CardinalDir facing){
 	}
 }
 
-/*
+
 void display_graphics(block front, block left, block right){
 	char *tag;
 	tag = (char*) malloc (20 * sizeof(char));

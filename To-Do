@@ -20,4 +20,4 @@ Code Edits/Changes/Adds
 [ ] add pointer null checks, for files ask for file names if failed
 [ ] edit exit program option
 [ ] add code comments
-
+[ ] create wrapper function for stuff in game_runner
