@@ -35,7 +35,7 @@ void get_user_input(char* input){
 }
 
 void display_input_error(const char* input){
-	printf("<%s> is not a valid command!", input);
+	printf("\"%s\" is not a valid command!", input);
 	printf("\nValid Commands are: move/turn, left, right or back\n");
 }
 

@@ -8,8 +8,36 @@
 #include "all.h"
 
 /********************	MAZE	********************/
+Grid* getMaze() {
+	static Grid Maze;
+	static int initialised = 0;
+	
+	if(!initialised){
+		Maze.data = NULL;
+		Maze.rows = 0;
+		Maze.cols = 0;
+		Maze.elem_size = 0;
+		initialised = 1;
+	}
+	return &Maze;
+}
+/*
+Grid* getDisplay() {
+	static Grid MapView;
+	static initialised = 0;
+	
+	if(!initialised){
+		MapView.data = NULL;
+		MapView.rows = 0;
+		MapView.cols = 0;
+		MapView.elem_size = 0;
+		initialised = 1;
+	}
+	return &Maze;
+}
 
-void create_maze_from_file(const char *filename, Grid *maze){
+*/
+Grid* create_maze_from_file(const char *filename){
 	char c;
 	int rows, cols;
 	FILE *mazeFile;
@@ -25,10 +53,21 @@ void create_maze_from_file(const char *filename, Grid *maze){
 	cols = longest_line_size(mazeFile);
 	//VARTRACE(cols, "%d");
 	
-	grid_init(maze, rows, cols, sizeof(BlockType));
-	if(maze->data == NULL){
+	//grid_init(maze, rows, cols, sizeof(BlockType));
+	
+	Grid* maze = getMaze();
+	if(maze == NULL){
 		//TRACE("Maze data pointer is NULL");
-		exit(1);
+		exit(EXIT_FAILURE);
+	} else {
+		maze->rows = rows;
+		maze->cols = cols;
+		maze->elem_size = sizeof(BlockType);
+		maze->data = malloc(rows * cols * maze->elem_size);
+		if(maze->data == NULL){
+			TRACE("Maze data pointer is NULL");
+			exit(EXIT_FAILURE);
+		}
 	}
 	
 	fseek(mazeFile, 0, SEEK_SET);
@@ -52,6 +91,7 @@ void create_maze_from_file(const char *filename, Grid *maze){
 		}
 	}
 	fclose(mazeFile);
+	return maze;
 	//TRACE("Maze Created");
 }
 

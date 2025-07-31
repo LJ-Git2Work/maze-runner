@@ -253,21 +253,21 @@ int open_file(const char *file_name){
 	}
 }
 
-int count_file_lines(FILE *fptr){
-    int lines = 1;
-    int c;
+int count_file_lines(FILE *fp){
+    int LineCount = 1;
+    char c;
 
-    fseek(fptr, 0, SEEK_SET);
-	if((c = fgetc(fptr)) == EOF){
+    fseek(fp, 0, SEEK_SET);
+	if((c = fgetc(fp)) == EOF){
 		return 0;
 	}
 
-    while((c = fgetc(fptr)) != EOF){
+    while((c = fgetc(fp)) != EOF){
         if (c == '\n') {
-            lines++;
+            LineCount++;
         }
     }
-    return lines;
+    return LineCount;
 }
 
 

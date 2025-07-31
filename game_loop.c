@@ -18,7 +18,7 @@ void run_game(Grid* maze, Player* user){
 		do{
 			update_player_blocks(maze, user);
 			system("cls");
-			create_and_display_maze(maze, user, display_player_map);
+			create_and_display_maze(maze, user, display_map_all);
 			
 			if(error_flag == 1)
 			{
